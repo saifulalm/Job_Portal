@@ -29,8 +29,8 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
-            // We'll set the role when we create the user in the seeder
-            'role' => 'employee', // Default role
+            // Default role is alumni, we will override this for companies/admins
+            'role' => 'alumni',
         ];
     }
 
@@ -44,3 +44,4 @@ class UserFactory extends Factory
         ]);
     }
 }
+

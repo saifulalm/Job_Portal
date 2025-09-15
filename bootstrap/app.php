@@ -15,7 +15,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'is.admin' => \App\Http\Middleware\IsAdmin::class,
             'is.company' => \App\Http\Middleware\IsCompany::class,
-            'is.employee' => \App\Http\Middleware\IsEmployee::class,
+            'is.employee' => \App\Http\Middleware\IsAlumni::class,
         ]);
 
         // You can also add global middleware here, or middleware groups.
