@@ -63,6 +63,27 @@ return [
             ]) : [],
         ],
 
+
+        // --- TAMBAHKAN BAGIAN BARU INI UNTUK KONEKSI DATABASE LAMA ---
+        'mysql_old' => [
+            'driver' => 'mysql',
+            'host' => env('DB_OLD_HOST', '127.0.0.1'),
+            'port' => env('DB_OLD_PORT', '3306'),
+            'database' => env('DB_OLD_DATABASE', 'laravel'),
+            'username' => env('DB_OLD_USERNAME', 'root'),
+            'password' => env('DB_OLD_PASSWORD', ''),
+            'unix_socket' => '',
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'strict' => false, // Dibuat false untuk menghindari masalah dengan database lama
+            'engine' => null,
+            'options' => extension_loaded('pdo_mysql') ? array_filter([
+                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
+            ]) : [],
+        ],
+
         'mariadb' => [
             'driver' => 'mariadb',
             'url' => env('DB_URL'),
