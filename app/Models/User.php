@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -19,7 +20,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'role', // We added this
+        'role',
     ];
 
     /**
@@ -45,21 +46,21 @@ class User extends Authenticatable
         ];
     }
 
-    // A user with the 'company' role has one company profile
+    /**
+     * Mendefinisikan relasi bahwa seorang user (dengan peran alumni)
+     * memiliki satu profil alumni.
+     */
+    public function alumniProfile()
+    {
+        return $this->hasOne(AlumniProfile::class);
+    }
+
+    /**
+     * Mendefinisikan relasi bahwa seorang user (dengan peran company)
+     * memiliki satu profil perusahaan.
+     */
     public function companyProfile()
     {
         return $this->hasOne(CompanyProfile::class);
-    }
-
-    // A user with the 'employee' role has one employee profile
-    public function employeeProfile()
-    {
-        return $this->hasOne(EmployeeProfile::class);
-    }
-
-    // A user with the 'employee' role can have many job applications
-    public function jobApplications()
-    {
-        return $this->hasMany(JobApplication::class);
     }
 }

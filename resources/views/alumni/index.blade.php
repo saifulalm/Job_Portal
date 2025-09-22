@@ -1,86 +1,23 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Direktori Alumni</title>
     <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.bunny.net" />
+    <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <style>
-        /* Custom styles for oval images and center alignment */
-        .profile-photo {
-            width: 300px;
-            height: 400px;
-            object-fit: cover;
-            border-radius: 50% / 40%;
-            margin-left: auto;
-            margin-right: auto;
-            display: block;
-        }
-
-        .profile-card {
-            text-align: center;
-            padding: 1rem;
-            max-width: 320px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .profile-name {
-            font-weight: 700;
-            font-size: 0.875rem; /* slightly bigger */
-            margin-top: 0.75rem;
-        }
-
-        .profile-job {
-            font-size: 0.75rem;
-            color: #ef4444; /* Tailwind red-500 */
-            margin-top: 0.25rem;
-        }
-
-        .profile-university {
-            font-size: 0.7rem;
-            color: #64748b; /* Tailwind slate-500 */
-            margin-top: 0.25rem;
-        }
-
-        .profile-link {
-            font-size: 0.75rem;
-            color: #ef4444; /* Tailwind red-500 */
-            margin-top: 0.75rem;
-            display: inline-block;
-            cursor: pointer;
-            text-decoration: underline;
-        }
-
-        /* Responsive grid layout */
-        .grid-container {
-            display: grid;
-            gap: 28px;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            padding: 2rem 1rem;
-            justify-items: center;
-        }
-
-        /* Header and main container padding */
-        main {
-            padding-bottom: 4rem;
-        }
-    </style>
 </head>
-<body class="antialiased font-sans bg-white">
+<body class="antialiased font-sans bg-slate-50">
 <div class="relative min-h-screen flex flex-col">
     <!-- Header -->
     <header class="sticky top-0 bg-white shadow-md z-10">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <div class="flex-shrink-0">
-                    <a href="{{ route('alumni.index') }}" class="text-2xl font-bold text-gray-800">
-                        🎓 <span class="text-red-600">Direktori</span> Alumni
-                    </a>
+                    <a href="{{ route('alumni.index') }}" class="text-2xl font-bold text-gray-800">🎓 <span class="text-red-600">Direktori</span> Alumni</a>
                 </div>
                 <nav class="hidden md:flex items-center gap-6">
                     @if (Route::has('login'))
@@ -119,31 +56,50 @@
         </div>
 
         <!-- Grid Alumni -->
-        <div class="bg-white py-16">
+        <div class="bg-slate-50 py-16">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8">
                 @if($alumni->isEmpty())
                     <div class="text-center py-16">
                         <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                            <path vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                  d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+                            <path vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
                         </svg>
                         <h3 class="mt-2 text-sm font-medium text-gray-900">Alumni Tidak Ditemukan</h3>
                         <p class="mt-1 text-sm text-gray-500">Tidak ada profil alumni yang cocok dengan kriteria pencarian Anda. Coba pencarian lain.</p>
                     </div>
                 @else
-                    <div class="grid-container">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
                         @foreach($alumni as $profile)
-                            <div class="profile-card">
-                                <img src="{{ $profile->photo_url }}" alt="Foto profil {{ $profile->user->name }}" class="profile-photo" />
-                                <h3 class="profile-name">{{ $profile->user->name }}</h3>
-                                <p class="profile-job">{{ $profile->job_title ?? 'Alumni' }}</p>
-                                <p class="profile-university">{{ $profile->university_name }}</p>
-                                <a href="{{ route('alumni.show', $profile->id) }}" class="profile-link">Lihat Profil</a>
+                            <!-- Kartu Profil Alumni -->
+                            <div class="rounded-lg bg-white text-center shadow-lg transition-shadow hover:shadow-xl flex flex-col">
+                                <!-- Banner Atas -->
+                                <div class="h-24 rounded-t-lg bg-red-600"></div>
+
+                                <!-- Konten Kartu (flex-grow untuk mendorong tombol ke bawah) -->
+                                <div class="p-6 pt-0 flex-grow flex flex-col">
+                                    <!-- Avatar yang menjorok ke atas banner -->
+                                    <div class="relative -mt-16 mb-4 flex justify-center">
+                                        <img src="{{ $profile->photo_url }}" alt="Foto profil {{ $profile->user->name }}" class="h-24 w-24 rounded-full border-4 border-white object-cover bg-gray-200">
+                                    </div>
+
+                                    <h3 class="text-xl font-bold text-slate-800">{{ $profile->user->name }}</h3>
+                                    <p class="mt-1 text-sm font-medium text-red-500 min-h-[1.25rem]">{{ $profile->job_title ?? 'Alumni' }}</p>
+                                    <p class="mt-2 text-xs text-slate-500">{{ $profile->university_name }}</p>
+
+                                    <!-- Spacer (mt-auto untuk mendorong tombol ke bawah) -->
+                                    <div class="mt-auto"></div>
+                                </div>
+
+                                <!-- Tombol Aksi (di luar flex-grow) -->
+                                <div class="p-6 pt-0">
+                                    <a href="{{ route('alumni.show', $profile->id) }}" class="mt-6 block w-full rounded-md bg-red-50 px-4 py-2 text-center font-medium text-red-600 transition hover:bg-red-100">
+                                        Lihat Profil
+                                    </a>
+                                </div>
                             </div>
                         @endforeach
                     </div>
-                    <!-- Pagination -->
-                    <div class="mt-12 text-center">
+                    <!-- Paginasi -->
+                    <div class="mt-12">
                         {{ $alumni->appends(request()->query())->links() }}
                     </div>
                 @endif
